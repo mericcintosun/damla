@@ -6,9 +6,27 @@ Damla lets you lock native MON behind a one-time link and share it anywhere (Wha
 a DM). Whoever opens the link claims the money. A relayer pays the gas, so the recipient needs no
 gas token and, by default, no pre-existing wallet at all. The claim is walletless and gasless.
 
+Think of it as send-by-link, but open, onchain, and trustless: the relayer pays the gas yet
+**mathematically cannot touch or redirect your money** — on the fastest EVM chain.
+
 - **Live app:** https://damla-nu.vercel.app
-- **Contract (Monad Testnet):** [`0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`](https://testnet.monadexplorer.com/address/0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1)
+- **LinkDrop contract (one-to-one):** [`0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`](https://testnet.monadexplorer.com/address/0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1)
+- **Drop contract (one-to-many):** [`0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d`](https://testnet.monadexplorer.com/address/0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d)
 - **Chain:** Monad Testnet (chainId `10143`)
+
+## Features
+
+- **Send by link** — lock MON, get a link, share it. The recipient claims walletless and gasless.
+- **Group drop** — one link, the first N people each claim an equal share. Tip a group chat or run
+  a giveaway without collecting a single address. (`DamlaDrop` contract.)
+- **Sponsored demo** — no wallet? A relayer funds a throwaway in-browser wallet with a tiny amount
+  so you can experience the whole send → claim loop with zero setup.
+- **QR code + private note** — every link gets a QR to scan in person, and an optional message
+  ("Happy birthday 🎂") carried privately in the URL fragment.
+- **My links** — a dashboard reading live on-chain status of what you sent; reclaim expired,
+  unclaimed drops in one click.
+- **On-chain proof everywhere** — real balances, real tx hashes, all linking to the Monad explorer.
+  No placeholder data, no fake success states.
 
 ---
 
@@ -66,8 +84,16 @@ to the Monad explorer. There are no placeholder numbers and no fake success stat
 ## Repository layout
 
 ```
-contracts/   Foundry project — DamlaLinkDrop.sol, tests, deploy script
-web/         Next.js (App Router) + viem — landing, /send, /c/[linkAddr], /api/relay
+contracts/   Foundry — DamlaLinkDrop.sol (one-to-one), DamlaDrop.sol (one-to-many), tests
+web/         Next.js (App Router) + viem
+             /            landing
+             /send        create a one-to-one money link
+             /c/[addr]    walletless + gasless claim
+             /drop        create a group drop (first N split it)
+             /d/[addr]    claim a share from a group drop
+             /links       your sent links + reclaim
+             /how-it-works, /faq
+             /api/relay   the relayer (claim / dropclaim / reclaim / sponsor)
 ```
 
 ## Smart contract
@@ -83,8 +109,9 @@ cd contracts
 forge test -vvv
 ```
 
-14 tests cover deposit, the signature-gated claim, the relayer-cannot-redirect property, wrong
-signer / wrong payout rejection, double-claim, and the reclaim/expiry paths.
+26 tests across both contracts cover deposit/createDrop, the signature-gated claim, the
+relayer-cannot-redirect property, wrong signer / wrong payout rejection, double-claim, the
+first-N-split and drop-empty paths, dust handling, and the reclaim/expiry paths.
 
 Deploy:
 
@@ -109,6 +136,7 @@ Environment variables (`web/.env.example`):
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_CONTRACT` | Deployed `DamlaLinkDrop` address |
+| `NEXT_PUBLIC_DROP_CONTRACT` | Deployed `DamlaDrop` address |
 | `NEXT_PUBLIC_CHAIN_ID` | `10143` (Monad Testnet) |
 | `NEXT_PUBLIC_RPC_URL` | `https://testnet-rpc.monad.xyz` |
 | `NEXT_PUBLIC_EXPLORER` | `https://testnet.monadexplorer.com` |
