@@ -8,7 +8,7 @@ import { EXPLORER, addrUrl } from "@/lib/chain";
 import { CONTRACT, DROP_CONTRACT, DAMLA_ABI, DROP_ABI } from "@/lib/contract";
 import { publicClient, shortAddr } from "@/lib/damla";
 
-const RELAYER = "0x1F7142Dab905e54F89FFefEe7c91A94eE7D22AB8" as const;
+const RELAYER = "0x123c5F55d3bBa9c612d095fB71C13B2458e24E00" as const;
 
 type Live = { linkDrop?: bigint; drop?: bigint; relayer?: bigint; block?: bigint };
 

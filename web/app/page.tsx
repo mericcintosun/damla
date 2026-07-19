@@ -1,13 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { TopBar, SiteFooter } from "@/components/Brand";
-import { GiftBanner } from "@/components/GiftBanner";
 
 export default function Home() {
   return (
     <div className="wrap">
       <TopBar />
-      <GiftBanner />
 
       <section className="hero">
         <div className="hero-visual reveal">
