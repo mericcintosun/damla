@@ -31,6 +31,43 @@ export function DropMark({ size = 22 }: { size?: number }) {
   );
 }
 
+export function SiteFooter() {
+  const links: [string, string][] = [
+    ["/send", "Send"],
+    ["/drop", "Group drop"],
+    ["/links", "My links"],
+    ["/proof", "Proof"],
+    ["/how-it-works", "How it works"],
+    ["/faq", "FAQ"],
+    ["/docs", "Docs"],
+    ["/blog", "Blog"],
+    ["/roadmap", "Roadmap"],
+    ["/brand-kit", "Brand kit"],
+    ["/report", "Report a problem"],
+  ];
+  return (
+    <div className="site-links">
+      <div className="site-links-grid">
+        {links.map(([href, label]) => (
+          <Link key={href} href={href}>
+            {label}
+          </Link>
+        ))}
+      </div>
+      <div className="site-links-meta">
+        <span>Damla · send money by a link on Monad</span>
+        <a
+          href="https://github.com/mericcintosun/damla"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export function TopBar({ right }: { right?: React.ReactNode }) {
   return (
     <div className="topbar">

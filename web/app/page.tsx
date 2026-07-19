@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { TopBar } from "@/components/Brand";
-import { CONTRACT } from "@/lib/contract";
-import { addrUrl } from "@/lib/chain";
+import { TopBar, SiteFooter } from "@/components/Brand";
 
 export default function Home() {
   return (
@@ -10,20 +8,21 @@ export default function Home() {
       <TopBar />
 
       <section className="hero">
-        <span className="eyebrow">
-          <span className="dot" /> Walletless &amp; gasless claim · Monad
+        <span className="eyebrow reveal">
+          <span className="dot" /> Walletless and gasless claim · Monad
         </span>
-        <h1>
-          Send money by a link.
+        <h1 className="reveal reveal-1">
+          Send money like
           <br />
-          <span className="grad">They just tap it.</span>
+          <span className="grad">a drop of water.</span>
         </h1>
-        <p className="lead">
-          Lock some MON behind a one-time link and share it anywhere. Whoever opens it gets the
-          money, <b>no wallet to install, no gas to buy, nothing to sign up for.</b>
+        <p className="lead reveal reveal-2">
+          Damla means a drop. The Monad faucet gives you drops of MON, and Damla lets you pass one to
+          anyone with nothing but a link. They tap it and the money is <b>theirs</b>, with no wallet
+          to install, no gas to buy, and nothing to sign up for.
         </p>
 
-        <div className="hero-visual">
+        <div className="hero-visual reveal reveal-2">
           <Image
             className="hero-mascot"
             src="/art/mascot-wave-cut.webp"
@@ -35,21 +34,21 @@ export default function Home() {
         </div>
 
         <div className="steps">
-          <div className="step">
+          <div className="step reveal reveal-1">
             <div className="n">1</div>
             <div className="t">
               <b>You lock the money.</b>{" "}
               <span>Pick an amount, get a link. One transaction from your wallet.</span>
             </div>
           </div>
-          <div className="step">
+          <div className="step reveal reveal-2">
             <div className="n">2</div>
             <div className="t">
               <b>They tap the link.</b>{" "}
               <span>A relayer covers the gas, so they need nothing to receive.</span>
             </div>
           </div>
-          <div className="step">
+          <div className="step reveal reveal-3">
             <div className="n">3</div>
             <div className="t">
               <b>Safe by design.</b>{" "}
@@ -58,31 +57,26 @@ export default function Home() {
           </div>
         </div>
 
-        <Link href="/send" className="btn">
+        <Link href="/send" className="btn reveal reveal-3">
           Create a money link →
         </Link>
-        <div className="mt-s">
+        <div className="mt-s reveal reveal-4">
           <Link href="/drop" className="btn ghost">
             Or drop to a group, first N people split it
           </Link>
         </div>
-        <div className="cta-row">
+        <div className="cta-row reveal reveal-4">
           <Link href="/how-it-works" className="ghost-link">
             How it works
           </Link>
           <span className="sep">·</span>
-          <Link href="/faq" className="ghost-link">
-            Why connect a wallet to send?
+          <Link href="/proof" className="ghost-link">
+            See live on-chain proof
           </Link>
         </div>
       </section>
 
-      <div className="foot">
-        <span>Native MON · Monad Testnet</span>
-        <a href={addrUrl(CONTRACT)} target="_blank" rel="noreferrer" className="mono">
-          Contract ↗
-        </a>
-      </div>
+      <SiteFooter />
     </div>
   );
 }
