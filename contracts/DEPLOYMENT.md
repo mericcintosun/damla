@@ -11,3 +11,13 @@
 | Verification | Sourcify (Monad) |
 
 Rebuild and redeploy with `forge script script/Deploy.s.sol` (see repo README).
+
+## DamlaDrop (multi-claim)
+
+| Field | Value |
+|---|---|
+| Contract | DamlaDrop |
+| Address | 0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d |
+| Deploy tx | 0xd2af4c92c299fadd015e011294ccc75891e48c96078f5bb898e18ae683ada038 |
+| Explorer | https://testnet.monadexplorer.com/address/0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d |
+| Verification | Sourcify (Monad) |
