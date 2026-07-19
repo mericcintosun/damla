@@ -9,14 +9,14 @@ import {
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { monadChain, RPC_URL } from "@/lib/chain";
-import { CONTRACT, DAMLA_ABI, DROP_CONTRACT, DROP_ABI } from "@/lib/contract";
+import { CONTRACT, DAMLA_ABI, DROP_CONTRACT, DROP_ABI, GIFT_CONTRACT, GIFT_ABI } from "@/lib/contract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// The relayer key only ever: relays claim/reclaim on our two contracts, or sponsors a small demo
-// amount to a burner so a walletless user can try the send side. Nothing else spends it.
-const ALLOWED = new Set(["claim", "reclaim", "dropclaim", "sponsor"]);
+// The relayer key only ever: relays claim/reclaim on our contracts, sponsors a small demo amount
+// to a burner, or triggers the on-chain welcome gift (which is itself capped at 20 addresses).
+const ALLOWED = new Set(["claim", "reclaim", "dropclaim", "sponsor", "gift"]);
 
 // Cap on gas the relayer will pay per relayed tx, far above a normal claim (~60k).
 const GAS_CAP = 200_000n;
@@ -96,6 +96,23 @@ export async function POST(req: Request) {
       }
       const hash = await wallet.sendTransaction({ to, value: SPONSOR_AMOUNT });
       return Response.json({ hash, amount: SPONSOR_AMOUNT.toString() });
+    }
+
+    // ---- Welcome gift (on-chain capped at 20 unique addresses) -----------------------------
+    if (action === "gift") {
+      if (!body.to || !isAddress(body.to)) {
+        return Response.json({ error: "Invalid address." }, { status: 400 });
+      }
+      const to = getAddress(body.to);
+      const { request } = await pub.simulateContract({
+        account,
+        address: GIFT_CONTRACT,
+        abi: GIFT_ABI,
+        functionName: "claimGift",
+        args: [to],
+      });
+      const hash = await wallet.writeContract(request);
+      return Response.json({ hash });
     }
 
     if (!body.linkAddr || !isAddress(body.linkAddr)) {
@@ -187,6 +204,9 @@ function cleanRevert(msg: string): string {
   if (/AlreadyClaimedThis/.test(msg)) return "You have already claimed from this drop.";
   if (/AlreadyClaimed/.test(msg)) return "This link has already been claimed.";
   if (/DropEmpty/.test(msg)) return "This drop is fully claimed, every share is gone.";
+  if (/AlreadyGifted/.test(msg)) return "This wallet already claimed its welcome gift.";
+  if (/SoldOut/.test(msg)) return "All 20 welcome gifts have been claimed.";
+  if (/PoolEmpty/.test(msg)) return "The gift pool is empty right now.";
   if (/BadSignature/.test(msg)) return "Signature check failed for this payout.";
   if (/NothingHere/.test(msg)) return "There is no drop behind this link.";
   if (/NotSender/.test(msg)) return "Only the original sender can reclaim this link.";

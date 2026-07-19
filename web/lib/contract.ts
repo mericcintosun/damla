@@ -7,6 +7,24 @@ export const CONTRACT = (process.env.NEXT_PUBLIC_CONTRACT ??
 export const DROP_CONTRACT = (process.env.NEXT_PUBLIC_DROP_CONTRACT ??
   "0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394") as `0x${string}`;
 
+export const GIFT_CONTRACT = (process.env.NEXT_PUBLIC_GIFT_CONTRACT ??
+  "0xa5216024641aC5D923C067F1e56e80D6dcd0C6Eb") as `0x${string}`;
+
+export const GIFT_ABI = [
+  { type: "function", name: "claimGift", stateMutability: "nonpayable", inputs: [{ name: "to", type: "address" }], outputs: [] },
+  { type: "function", name: "claimedCount", stateMutability: "view", inputs: [], outputs: [{ type: "uint32" }] },
+  { type: "function", name: "remaining", stateMutability: "view", inputs: [], outputs: [{ type: "uint32" }] },
+  { type: "function", name: "MAX", stateMutability: "view", inputs: [], outputs: [{ type: "uint32" }] },
+  { type: "function", name: "GIFT", stateMutability: "view", inputs: [], outputs: [{ type: "uint256" }] },
+  { type: "function", name: "claimed", stateMutability: "view", inputs: [{ name: "", type: "address" }], outputs: [{ type: "bool" }] },
+  { type: "error", name: "NotOwner", inputs: [] },
+  { type: "error", name: "AlreadyGifted", inputs: [] },
+  { type: "error", name: "SoldOut", inputs: [] },
+  { type: "error", name: "PoolEmpty", inputs: [] },
+  { type: "error", name: "TransferFailed", inputs: [] },
+  { type: "error", name: "BadInput", inputs: [] },
+] as const satisfies Abi;
+
 export const DAMLA_ABI = [
   {
     type: "function",

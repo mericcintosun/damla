@@ -61,3 +61,4 @@ jobs:
           NEXT_PUBLIC_CHAIN_ID: "143"
           NEXT_PUBLIC_RPC_URL: "https://rpc.monad.xyz"
           NEXT_PUBLIC_EXPLORER: "https://monadscan.com"
+          NEXT_PUBLIC_GIFT_CONTRACT: "0xa5216024641aC5D923C067F1e56e80D6dcd0C6Eb"
