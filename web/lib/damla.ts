@@ -14,25 +14,31 @@ export const publicClient = createPublicClient({
   transport: http(RPC_URL),
 });
 
-// Recreate the exact inner digest the contract hashes over. The link key signs this
-// as an EIP-191 personal_sign message, which matches _digest() in DamlaLinkDrop.sol.
-export function claimInnerDigest(linkAddr: `0x${string}`, payout: `0x${string}`): Hex {
+// Recreate the exact inner digest a Damla contract hashes over. The link key signs this as an
+// EIP-191 personal_sign message, which matches _digest() in both DamlaLinkDrop and DamlaDrop.
+export function claimInnerDigest(
+  contract: `0x${string}`,
+  linkAddr: `0x${string}`,
+  payout: `0x${string}`
+): Hex {
   return keccak256(
     encodePacked(
       ["address", "uint256", "address", "address"],
-      [CONTRACT, BigInt(CHAIN_ID), linkAddr, payout]
+      [contract, BigInt(CHAIN_ID), linkAddr, payout]
     )
   );
 }
 
 // Sign a claim authorization with the ephemeral link key carried in the URL fragment.
+// `contract` defaults to the single-link contract for backward compatibility.
 export async function signClaim(
   secret: Hex,
   linkAddr: `0x${string}`,
-  payout: `0x${string}`
+  payout: `0x${string}`,
+  contract: `0x${string}` = CONTRACT
 ): Promise<Hex> {
   const link = privateKeyToAccount(secret);
-  const inner = claimInnerDigest(linkAddr, payout);
+  const inner = claimInnerDigest(contract, linkAddr, payout);
   // raw message => EIP-191: keccak256("\x19Ethereum Signed Message:\n32" || inner)
   return link.signMessage({ message: { raw: inner } });
 }

@@ -3,6 +3,9 @@ import type { Abi } from "viem";
 export const CONTRACT = (process.env.NEXT_PUBLIC_CONTRACT ??
   "0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1") as `0x${string}`;
 
+export const DROP_CONTRACT = (process.env.NEXT_PUBLIC_DROP_CONTRACT ??
+  "0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d") as `0x${string}`;
+
 export const DAMLA_ABI = [
   {
     type: "function",
@@ -48,6 +51,61 @@ export const DAMLA_ABI = [
   { type: "error", name: "NothingHere", inputs: [] },
   { type: "error", name: "AlreadyClaimed", inputs: [] },
   { type: "error", name: "BadSignature", inputs: [] },
+  { type: "error", name: "NotExpired", inputs: [] },
+  { type: "error", name: "NotSender", inputs: [] },
+  { type: "error", name: "TransferFailed", inputs: [] },
+  { type: "error", name: "BadInput", inputs: [] },
+] as const satisfies Abi;
+
+export const DROP_ABI = [
+  {
+    type: "function",
+    name: "createDrop",
+    stateMutability: "payable",
+    inputs: [
+      { name: "linkAddr", type: "address" },
+      { name: "slots", type: "uint32" },
+      { name: "expiry", type: "uint64" },
+    ],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "claim",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "linkAddr", type: "address" },
+      { name: "payout", type: "address" },
+      { name: "sig", type: "bytes" },
+    ],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "reclaim",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "linkAddr", type: "address" }],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "getPool",
+    stateMutability: "view",
+    inputs: [{ name: "linkAddr", type: "address" }],
+    outputs: [
+      { name: "sender", type: "address" },
+      { name: "amountPerClaim", type: "uint256" },
+      { name: "remaining", type: "uint256" },
+      { name: "slots", type: "uint32" },
+      { name: "claimed", type: "uint32" },
+      { name: "expiry", type: "uint64" },
+    ],
+  },
+  { type: "error", name: "AlreadyExists", inputs: [] },
+  { type: "error", name: "NothingHere", inputs: [] },
+  { type: "error", name: "BadSignature", inputs: [] },
+  { type: "error", name: "DropEmpty", inputs: [] },
+  { type: "error", name: "AlreadyClaimedThis", inputs: [] },
   { type: "error", name: "NotExpired", inputs: [] },
   { type: "error", name: "NotSender", inputs: [] },
   { type: "error", name: "TransferFailed", inputs: [] },

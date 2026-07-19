@@ -9,14 +9,14 @@ import {
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { monadTestnet, RPC_URL } from "@/lib/chain";
-import { CONTRACT, DAMLA_ABI } from "@/lib/contract";
+import { CONTRACT, DAMLA_ABI, DROP_CONTRACT, DROP_ABI } from "@/lib/contract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// The relayer key only ever: relays claim/reclaim on our contract, or sponsors a small demo
+// The relayer key only ever: relays claim/reclaim on our two contracts, or sponsors a small demo
 // amount to a burner so a walletless user can try the send side. Nothing else spends it.
-const ALLOWED = new Set(["claim", "reclaim", "sponsor"]);
+const ALLOWED = new Set(["claim", "reclaim", "dropclaim", "sponsor"]);
 
 // Cap on gas the relayer will pay per relayed tx — far above a normal claim (~60k).
 const GAS_CAP = 200_000n;
@@ -102,6 +102,36 @@ export async function POST(req: Request) {
       return Response.json({ error: "Invalid link address." }, { status: 400 });
     }
 
+    // ---- Relayed multi-claim drop share ----------------------------------------------------
+    if (action === "dropclaim") {
+      if (!body.payout || !isAddress(body.payout)) {
+        return Response.json({ error: "Invalid payout address." }, { status: 400 });
+      }
+      if (typeof body.sig !== "string" || !/^0x[0-9a-fA-F]{130}$/.test(body.sig)) {
+        return Response.json({ error: "Invalid signature." }, { status: 400 });
+      }
+      const args = [getAddress(body.linkAddr), getAddress(body.payout), body.sig as Hex] as const;
+      const { request } = await pub.simulateContract({
+        account,
+        address: DROP_CONTRACT,
+        abi: DROP_ABI,
+        functionName: "claim",
+        args,
+      });
+      const gas = await pub.estimateContractGas({
+        account,
+        address: DROP_CONTRACT,
+        abi: DROP_ABI,
+        functionName: "claim",
+        args,
+      });
+      if (gas > GAS_CAP) {
+        return Response.json({ error: "Gas estimate above the relayer cap." }, { status: 400 });
+      }
+      const hash = await wallet.writeContract(request);
+      return Response.json({ hash });
+    }
+
     // ---- Relayed claim ---------------------------------------------------------------------
     if (action === "claim") {
       if (!body.payout || !isAddress(body.payout)) {
@@ -154,7 +184,9 @@ export async function POST(req: Request) {
 }
 
 function cleanRevert(msg: string): string {
+  if (/AlreadyClaimedThis/.test(msg)) return "You have already claimed from this drop.";
   if (/AlreadyClaimed/.test(msg)) return "This link has already been claimed.";
+  if (/DropEmpty/.test(msg)) return "This drop is fully claimed — every share is gone.";
   if (/BadSignature/.test(msg)) return "Signature check failed for this payout.";
   if (/NothingHere/.test(msg)) return "There is no drop behind this link.";
   if (/NotSender/.test(msg)) return "Only the original sender can reclaim this link.";
