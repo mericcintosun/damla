@@ -1,0 +1,24 @@
+# deps
+node_modules
+web/node_modules
+web/.next
+web/out
+
+# env / secrets
+.env
+.env.local
+.env*.local
+*.key
+keys.env
+
+# foundry
+contracts/out
+contracts/cache
+contracts/broadcast
+
+# misc
+.DS_Store
+*.log
+.vercel
+HAND_OFF.md
+.vscode/
