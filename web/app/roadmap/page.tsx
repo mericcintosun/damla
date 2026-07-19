@@ -35,7 +35,7 @@ export default function Roadmap() {
               <span className="dot" /> Live now
             </span>
           </div>
-          <p className="rm-sub">Built during the hackathon and running on Monad Testnet today.</p>
+          <p className="rm-sub">Built during the hackathon and running on Monad today.</p>
           <ul className="rm-list">
             <li>
               <b>Send money by a link.</b>{" "}
@@ -68,8 +68,8 @@ export default function Roadmap() {
               <span>Print or show a code to claim in person, and add a note only the sender keeps.</span>
             </li>
             <li>
-              <b>Two verified contracts on Monad Testnet.</b>{" "}
-              <span>Source published and verified, one for single links and one for group drops.</span>
+              <b>Live on Monad mainnet.</b>{" "}
+              <span>Two contracts deployed and verified on mainnet, one for single links and one for group drops. Links move real MON.</span>
             </li>
           </ul>
         </section>
@@ -83,10 +83,6 @@ export default function Roadmap() {
           </div>
           <p className="rm-sub">The short list we start on the moment judging is done.</p>
           <ul className="rm-list">
-            <li>
-              <b>Monad mainnet.</b>{" "}
-              <span>Deploy the same verified contracts to mainnet so links move real money.</span>
-            </li>
             <li>
               <b>Stablecoins and tokens.</b>{" "}
               <span>Send more than native MON, so a link can carry the asset people actually want.</span>
@@ -138,9 +134,8 @@ export default function Roadmap() {
         <div className="divider" />
 
         <p className="note">
-          Honest note: Damla is a hackathon build on Monad Testnet. Everything under Shipped works
-          today, and mainnet is the immediate next step. The rest is where we want to go, not a
-          promise of dates.
+          Honest note: Damla is a hackathon build, already live on Monad mainnet. Everything under
+          Shipped works today with real MON. The rest is where we want to go, not a promise of dates.
         </p>
 
         <div className="mt">

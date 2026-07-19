@@ -1,10 +1,11 @@
 import type { Abi } from "viem";
 
+// Monad mainnet deployments.
 export const CONTRACT = (process.env.NEXT_PUBLIC_CONTRACT ??
   "0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1") as `0x${string}`;
 
 export const DROP_CONTRACT = (process.env.NEXT_PUBLIC_DROP_CONTRACT ??
-  "0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d") as `0x${string}`;
+  "0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394") as `0x${string}`;
 
 export const DAMLA_ABI = [
   {

@@ -57,7 +57,7 @@ jobs:
           # Public defaults so the build never depends on secrets. The relayer key is only read at
           # runtime, never at build time.
           NEXT_PUBLIC_CONTRACT: "0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1"
-          NEXT_PUBLIC_DROP_CONTRACT: "0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d"
-          NEXT_PUBLIC_CHAIN_ID: "10143"
-          NEXT_PUBLIC_RPC_URL: "https://testnet-rpc.monad.xyz"
-          NEXT_PUBLIC_EXPLORER: "https://testnet.monadexplorer.com"
+          NEXT_PUBLIC_DROP_CONTRACT: "0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394"
+          NEXT_PUBLIC_CHAIN_ID: "143"
+          NEXT_PUBLIC_RPC_URL: "https://rpc.monad.xyz"
+          NEXT_PUBLIC_EXPLORER: "https://monadscan.com"

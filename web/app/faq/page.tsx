@@ -58,8 +58,8 @@ export default function Faq() {
 
           <p className="q">Which network is this?</p>
           <p>
-            Monad Testnet. The token is test MON with no real value, which is why demo amounts are
-            tiny. The same contract works on Monad mainnet unchanged.
+            Monad mainnet (chainId 143), with real MON. That is exactly why the amounts here are
+            kept tiny, it is real money moving on-chain, not a testnet toy.
           </p>
 
           <div className="mt">

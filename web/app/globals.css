@@ -819,6 +819,36 @@ a {
   margin-left: auto;
 }
 
+.fund-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.fund-switch {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.fund-switch:hover {
+  filter: brightness(1.15);
+}
+.fund-switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .progress {
   margin: 16px 0 4px;
 }

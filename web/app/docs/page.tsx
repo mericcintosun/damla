@@ -108,11 +108,11 @@ const RES_SPONSOR = `{ "hash": "0xTransactionHash", "amount": "60000000000000000
 const ENV_BLOCK = `# Client-readable (safe to expose)
 NEXT_PUBLIC_CONTRACT=0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1
 NEXT_PUBLIC_DROP_CONTRACT=0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d
-NEXT_PUBLIC_CHAIN_ID=10143
-NEXT_PUBLIC_RPC_URL=https://testnet-rpc.monad.xyz
-NEXT_PUBLIC_EXPLORER=https://testnet.monadexplorer.com
+NEXT_PUBLIC_CHAIN_ID=143
+NEXT_PUBLIC_RPC_URL=https://rpc.monad.xyz
+NEXT_PUBLIC_EXPLORER=https://monadscan.com
 
-# Server-only. A funded testnet key used ONLY to pay gas for
+# Server-only. A funded mainnet key used ONLY to pay gas for
 # claim / dropclaim / reclaim and the demo sponsor. Never expose it.
 RELAYER_PRIVATE_KEY=0xYourFundedRelayerKey`;
 
@@ -137,7 +137,7 @@ export default function Docs() {
             wallet and pays no gas. This page covers the two on-chain contracts,
             the claim signature that keeps custody trustless, the relayer API,
             and how to run the app locally. Everything here targets{" "}
-            <b>Monad Testnet</b> (chainId <span className="mono">10143</span>).
+            <b>Monad</b> (chainId <span className="mono">143</span>).
           </p>
 
           <div className="docs-toc">
@@ -171,7 +171,7 @@ export default function Docs() {
               Damla is a link that carries money. A sender escrows MON against a
               fresh, single-use key; whoever opens the link claims the funds into
               any address they control. There are two contracts, both live on
-              Monad Testnet:
+              Monad:
             </p>
             <div className="row">
               <span className="k">DamlaLinkDrop</span>
@@ -526,7 +526,7 @@ export default function Docs() {
             </p>
             <pre className="docs-pre">{ENV_BLOCK}</pre>
             <div className="note">
-              Use a dedicated, low-balance testnet key for the relayer. It only
+              Use a dedicated, low-balance mainnet key for the relayer. It only
               needs enough MON to cover gas for claims and the small demo sponsor.
               Never reuse a key that holds real value.
             </div>

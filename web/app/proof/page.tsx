@@ -101,7 +101,7 @@ export default function ProofPage() {
       <TopBar />
       <div className="card">
         <span className="eyebrow">
-          <span className="dot" /> Live on Monad Testnet
+          <span className="dot" /> Live on Monad
         </span>
         <h2 className="card-h">Proof, read straight from the chain</h2>
         <p className="note mb-s">

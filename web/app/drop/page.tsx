@@ -13,7 +13,7 @@ import {
   type Hex,
 } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { TopBar } from "@/components/Brand";
+import { TopBar, SiteFooter } from "@/components/Brand";
 import { monadTestnet, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
 import { DROP_CONTRACT, DROP_ABI } from "@/lib/contract";
 import { publicClient, shortAddr } from "@/lib/damla";
@@ -24,14 +24,11 @@ const getInjected = () =>
 
 const EXPIRY_HOURS = 24;
 const DEMO_KEY = "damla_demo_sender";
-
-type Mode = "choose" | "wallet" | "demo";
+type Funding = "demo" | "wallet";
 
 export default function DropPage() {
-  const [mode, setMode] = useState<Mode>("choose");
+  const [funding, setFunding] = useState<Funding>("demo");
   const [account, setAccount] = useState<`0x${string}` | null>(null);
-  const [demoKey, setDemoKey] = useState<Hex | null>(null);
-  const [isDemo, setIsDemo] = useState(false);
   const [total, setTotal] = useState("");
   const [slots, setSlots] = useState(5);
   const [busy, setBusy] = useState(false);
@@ -40,6 +37,22 @@ export default function DropPage() {
   const [link, setLink] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const eth = getInjected();
+      if (!eth) return;
+      try {
+        const accs = (await eth.request({ method: "eth_accounts" })) as string[];
+        if (accs && accs.length) {
+          setAccount(accs[0] as `0x${string}`);
+          setFunding("wallet");
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+  }, []);
 
   async function ensureChain(eth: EthProvider) {
     try {
@@ -50,7 +63,7 @@ export default function DropPage() {
         params: [
           {
             chainId: numberToHex(CHAIN_ID),
-            chainName: "Monad Testnet",
+            chainName: "Monad",
             nativeCurrency: { name: "Monad", symbol: "MON", decimals: 18 },
             rpcUrls: [RPC_URL],
             blockExplorerUrls: [EXPLORER],
@@ -60,56 +73,43 @@ export default function DropPage() {
     }
   }
 
-  async function connectWallet() {
+  async function useOwnWallet() {
     setError(null);
     const eth = getInjected();
     if (!eth) {
-      setError("No wallet found. Install one, or use the sponsored demo.");
+      setError("No wallet found. The instant wallet works with nothing installed.");
       return;
     }
     try {
       const accs = (await eth.request({ method: "eth_requestAccounts" })) as string[];
       await ensureChain(eth);
       setAccount(accs[0] as `0x${string}`);
-      setMode("wallet");
+      setFunding("wallet");
     } catch (e) {
       setError(readableError(e));
     }
   }
 
-  async function startDemo() {
-    setError(null);
-    setBusy(true);
-    setBusyLabel("Setting up your demo wallet…");
-    try {
-      let key = localStorage.getItem(DEMO_KEY) as Hex | null;
-      if (!key) {
-        key = generatePrivateKey();
-        localStorage.setItem(DEMO_KEY, key);
-      }
-      const addr = privateKeyToAccount(key).address;
-      let bal = await publicClient.getBalance({ address: addr });
-      if (bal < parseEther("0.03")) {
-        setBusyLabel("Funding your demo wallet (sponsored)…");
-        const resp = await fetch("/api/relay", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "sponsor", to: addr }),
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data?.error ?? "Could not fund the demo wallet.");
-        await publicClient.waitForTransactionReceipt({ hash: data.hash });
-        bal = await publicClient.getBalance({ address: addr });
-      }
-      setDemoKey(key);
-      setIsDemo(true);
-      setMode("demo");
-    } catch (e) {
-      setError(readableError(e));
-    } finally {
-      setBusy(false);
-      setBusyLabel("");
+  async function ensureDemoWallet(): Promise<Hex> {
+    let key = localStorage.getItem(DEMO_KEY) as Hex | null;
+    if (!key) {
+      key = generatePrivateKey();
+      localStorage.setItem(DEMO_KEY, key);
     }
+    const addr = privateKeyToAccount(key).address;
+    const bal = await publicClient.getBalance({ address: addr });
+    if (bal < parseEther("0.03")) {
+      setBusyLabel("Warming up your instant wallet…");
+      const resp = await fetch("/api/relay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "sponsor", to: addr }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data?.error ?? "Could not prepare the instant wallet.");
+      await publicClient.waitForTransactionReceipt({ hash: data.hash });
+    }
+    return key;
   }
 
   async function createDrop() {
@@ -126,37 +126,34 @@ export default function DropPage() {
     if (value < BigInt(slots)) return setError("Total is too small to split into that many shares.");
 
     setBusy(true);
-    setBusyLabel(`Funding a ${slots}-person drop…`);
     try {
       const secret = generatePrivateKey();
       const linkAddr = privateKeyToAccount(secret).address;
       const expiry = BigInt(Math.floor(Date.now() / 1000) + EXPIRY_HOURS * 3600);
 
       let wallet;
-      if (mode === "demo" && demoKey) {
-        wallet = createWalletClient({ account: privateKeyToAccount(demoKey), chain: monadTestnet, transport: http(RPC_URL) });
-      } else {
+      let usedDemo = false;
+      if (funding === "wallet" && account) {
         const eth = getInjected();
-        if (!eth || !account) throw new Error("Wallet not connected.");
+        if (!eth) throw new Error("Wallet not available.");
         await ensureChain(eth);
         wallet = createWalletClient({ account, chain: monadTestnet, transport: custom(eth) });
+      } else {
+        usedDemo = true;
+        const key = await ensureDemoWallet();
+        wallet = createWalletClient({ account: privateKeyToAccount(key), chain: monadTestnet, transport: http(RPC_URL) });
       }
 
+      setBusyLabel(`Funding a ${slots}-person drop…`);
       const submit = () =>
-        wallet.writeContract({
-          address: DROP_CONTRACT,
-          abi: DROP_ABI,
-          functionName: "createDrop",
-          args: [linkAddr, slots, expiry],
-          value,
-        });
+        wallet.writeContract({ address: DROP_CONTRACT, abi: DROP_ABI, functionName: "createDrop", args: [linkAddr, slots, expiry], value });
       let hash: `0x${string}`;
       try {
         hash = await submit();
       } catch (err) {
         const full = ((err as { message?: string })?.message ?? "") + ((err as { shortMessage?: string })?.shortMessage ?? "");
-        if (mode === "demo" && /insufficient balance/i.test(full)) {
-          setBusyLabel("Almost there, finalizing your demo balance…");
+        if (usedDemo && /insufficient balance/i.test(full)) {
+          setBusyLabel("Almost there, finalizing your balance…");
           await new Promise((r) => setTimeout(r, 3500));
           hash = await submit();
         } else throw err;
@@ -197,13 +194,9 @@ export default function DropPage() {
     setTimeout(() => setCopied(false), 1500);
   }
 
-  const shareText = link
-    ? `First ${slots} people to tap this each get ${perShare} MON, no wallet, no gas needed. ${link}`
-    : "";
+  const shareText = link ? `First ${slots} people to tap this each get ${perShare} MON, no wallet, no gas needed. ${link}` : "";
   const whatsapp = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-
-  const activeAddr = mode === "demo" && demoKey ? privateKeyToAccount(demoKey).address : account;
 
   return (
     <div className="wrap">
@@ -211,12 +204,7 @@ export default function DropPage() {
 
       {link ? (
         <div className="card">
-          <span className="eyebrow">
-            <span className="dot" /> Drop is live
-          </span>
-          <h2 className="card-h">
-            First {slots} people each get {perShare} MON.
-          </h2>
+          <h2 className="card-h">First {slots} people each get {perShare} MON.</h2>
           <p className="note">
             Post this one link anywhere. Each person who opens it claims a share, no wallet, no gas.
             The link is the giveaway.
@@ -264,40 +252,13 @@ export default function DropPage() {
             </button>
           </div>
         </div>
-      ) : mode === "choose" ? (
-        <div className="card">
-          <span className="eyebrow">
-            <span className="dot" /> Group drop
-          </span>
-          <h2 className="card-h">One link. The first N people split it.</h2>
-          <p className="note mb-s">
-            Tip your group chat or run a giveaway without collecting a single address. You fund it;
-            the first people to tap the link each claim an equal share, walletless and gasless.
-          </p>
-          <div className="mt">
-            <button className="btn" onClick={connectWallet} disabled={busy}>
-              Connect my wallet
-            </button>
-            <div className="mt-s">
-              <button className="btn ghost" onClick={startDemo} disabled={busy}>
-                {busy ? (
-                  <>
-                    <span className="spinner" /> {busyLabel || "Working…"}
-                  </>
-                ) : (
-                  <>No wallet? Try a sponsored demo</>
-                )}
-              </button>
-            </div>
-          </div>
-          {error && <div className="status err">{error}</div>}
-        </div>
       ) : (
         <div className="card">
-          <span className="eyebrow">
-            <span className="dot" /> {isDemo ? "Demo wallet ready" : "Wallet connected"}
-          </span>
-          <h2 className="card-h">Set up your drop</h2>
+          <h2 className="card-h">One link. The first N people split it.</h2>
+          <p className="note mb-s">
+            Tip your group chat or run a giveaway without collecting a single address. The first
+            people to tap the link each claim an equal share, walletless and gasless.
+          </p>
 
           <div className="mt">
             <label className="label">Total amount</label>
@@ -308,11 +269,12 @@ export default function DropPage() {
                 value={total}
                 onChange={(e) => setTotal(e.target.value.replace(/[^0-9.]/g, ""))}
                 disabled={busy}
+                autoFocus
               />
               <span className="unit">MON</span>
             </div>
             <div className="chips">
-              {(isDemo ? ["0.01", "0.02", "0.03"] : ["0.5", "1", "2"]).map((a) => (
+              {["0.01", "0.03", "0.05", "0.1"].map((a) => (
                 <button key={a} className="chip" onClick={() => setTotal(a)} disabled={busy}>
                   {a}
                 </button>
@@ -330,11 +292,7 @@ export default function DropPage() {
               <button className="step-btn" onClick={() => setSlots((s) => Math.min(50, s + 1))} disabled={busy}>
                 +
               </button>
-              {perShare && (
-                <span className="step-note">
-                  {perShare} MON each
-                </span>
-              )}
+              {perShare && <span className="step-note">{perShare} MON each</span>}
             </div>
           </div>
 
@@ -349,21 +307,32 @@ export default function DropPage() {
               )}
             </button>
           </div>
-          <div className="row mt-s" style={{ borderBottom: "none" }}>
-            <span className="k">
-              {isDemo ? "Demo" : "Connected"} · <span className="mono">{shortAddr(activeAddr ?? "")}</span>
-            </span>
+
+          <div className="fund-row">
+            {funding === "wallet" && account ? (
+              <>
+                <span>
+                  Paying from <span className="mono">{shortAddr(account)}</span>
+                </span>
+                <button className="fund-switch" onClick={() => setFunding("demo")} disabled={busy}>
+                  use instant wallet
+                </button>
+              </>
+            ) : (
+              <>
+                <span>Paid from a free instant wallet, nothing to install</span>
+                <button className="fund-switch" onClick={useOwnWallet} disabled={busy}>
+                  use my own wallet
+                </button>
+              </>
+            )}
           </div>
+
           {error && <div className="status err">{error}</div>}
         </div>
       )}
 
-      <div className="foot">
-        <Link href="/send">Send to one person</Link>
-        <a href={`${EXPLORER}/address/${DROP_CONTRACT}`} target="_blank" rel="noreferrer" className="mono">
-          Drop contract ↗
-        </a>
-      </div>
+      <SiteFooter />
     </div>
   );
 }

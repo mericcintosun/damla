@@ -1,24 +1,24 @@
 import { defineChain } from "viem";
 
-// Monad testnet parameters (verified live against docs.monad.xyz / chainlist).
-export const CHAIN_ID = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? 10143);
+// Monad mainnet parameters (verified live against docs.monad.xyz).
+export const CHAIN_ID = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? 143);
 export const RPC_URL =
-  process.env.NEXT_PUBLIC_RPC_URL ?? "https://testnet-rpc.monad.xyz";
+  process.env.NEXT_PUBLIC_RPC_URL ?? "https://rpc.monad.xyz";
 export const EXPLORER =
-  process.env.NEXT_PUBLIC_EXPLORER ?? "https://testnet.monadexplorer.com";
+  process.env.NEXT_PUBLIC_EXPLORER ?? "https://monadscan.com";
 
 export const monadTestnet = defineChain({
   id: CHAIN_ID,
-  name: "Monad Testnet",
+  name: "Monad",
   nativeCurrency: { name: "Monad", symbol: "MON", decimals: 18 },
   rpcUrls: {
     default: { http: [RPC_URL] },
     public: { http: [RPC_URL] },
   },
   blockExplorers: {
-    default: { name: "Monad Explorer", url: EXPLORER },
+    default: { name: "Monadscan", url: EXPLORER },
   },
-  testnet: true,
+  testnet: false,
 });
 
 export const txUrl = (hash: string) => `${EXPLORER}/tx/${hash}`;
