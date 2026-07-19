@@ -1019,7 +1019,7 @@ a {
   border-top: 1px solid var(--border);
   padding-top: 26px;
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 24px 20px;
 }
 .footer-brand .brand {
