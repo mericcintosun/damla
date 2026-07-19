@@ -153,8 +153,28 @@ Environment variables (`web/.env.example`):
 | `RELAYER_PRIVATE_KEY` | **Server-only.** A funded mainnet key used only to pay gas for `claim` / `reclaim`. |
 
 The relayer route (`web/app/api/relay/route.ts`) is deliberately narrow: it only ever calls our
-contract's `claim` / `reclaim`, validates the address checksums and the 65-byte signature,
-simulates before sending, enforces a per-transaction gas cap, and rate-limits per IP.
+contracts, validates the address checksums and the 65-byte signature, simulates before sending,
+enforces a per-transaction gas cap, and rate-limits per IP.
+
+## Security
+
+Damla holds real funds on mainnet, so the operational security is treated as part of the product,
+not an afterthought.
+
+- **The relayer cannot touch user money.** Every escrow contract only ever releases funds to the
+  address the link key signed. Even a fully compromised relayer key cannot redirect a single wei of
+  a user's drop, it can only waste its own gas.
+- **A dedicated mainnet-only relayer key.** The relayer key used in production was generated only
+  for mainnet and has never been used or exposed on a public testnet. Reusing a key that was active
+  on a public testnet is a known way to get swept: bots watch those addresses and drain any mainnet
+  balance that lands. We learned this the direct way early on and rotated to a fresh, isolated key.
+- **Minimal hot balance.** The relayer only ever holds a small amount for gas. The larger pools (the
+  welcome gift) live in their own contracts, guarded by an owner check, not in the hot wallet.
+- **Owner-guarded gift pool.** The welcome gift contract pays a fixed amount to at most a fixed
+  number of unique addresses, one per address, and only the owner can trigger a gift. The counter is
+  on-chain, so the "N of 20 claimed" number in the app is the real state, not a guess.
+- **Rate limits.** The relayer applies a global per-IP limit, a tighter one for the sponsored demo,
+  and a strict one-per-device limit for the gift, on top of the on-chain caps.
 
 ## Tech
 

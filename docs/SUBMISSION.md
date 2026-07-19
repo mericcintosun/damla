@@ -12,6 +12,7 @@ contracts are funded and deployed.
 **Contract addresses (Monad mainnet):**
 - DamlaLinkDrop (one to one): `0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`
 - DamlaDrop (one to many): `0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394`
+- DamlaGift (welcome gift, 20 x 0.6 MON): `0x3c6a0f60d9FFe479E1e121b211D13703e4d80045`
 
 Contract address for the form: 0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1 (DamlaLinkDrop).
 
@@ -65,12 +66,20 @@ guarantee to many claimers from one link.
    tick "1 of 3 claimed" live.
 6. Close: real contract, real transactions, no wallet needed to receive.
 
-## Viral post draft (X)
+## Viral post (X, from @damla_monad)
 
-> I built a way to send money by a link on @monad.
+> Send someone money with a link. They claim it with no wallet, no gas, no signup.
 >
-> No wallet. No gas. No signup. You tap the link and it is yours.
+> That is Damla. You drop some MON into a link, send it however you send links, and the person on
+> the other side just opens it. Nothing to install, nothing to sign up for.
 >
-> First 5 people to open this each get MON, link below.
+> A relayer covers the gas so your recipient never pays. And by design that relayer can move your
+> money to exactly one place, the person you are sending to. It cannot redirect it, cannot skim it,
+> cannot keep it.
 >
-> The relayer pays the gas but cannot touch your money. Here is how it works.
+> The first users also get a 0.6 MON welcome gift to start with.
+>
+> getdamla.vercel.app
+
+The full set of posts (viral, gift recipient, live drop dare) lives in
+[SOCIAL_POSTS.md](./SOCIAL_POSTS.md).

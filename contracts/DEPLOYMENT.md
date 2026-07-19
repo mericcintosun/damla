@@ -23,3 +23,16 @@ Live on Monad mainnet.
 | Explorer | https://monadscan.com/address/0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394 |
 
 Rebuild and redeploy with `forge create` or `forge script script/Deploy.s.sol` (see repo README).
+
+## DamlaGift (welcome gift, 20 x 0.6 MON)
+
+| Field | Value |
+|---|---|
+| Network | Monad mainnet |
+| Chain ID | 143 |
+| Address | 0x3c6a0f60d9FFe479E1e121b211D13703e4d80045 |
+| Explorer | https://monadscan.com/address/0x3c6a0f60d9FFe479E1e121b211D13703e4d80045 |
+| Owner | dedicated mainnet-only relayer (never used on testnet) |
+
+Note: an earlier relayer key was reused from a public testnet and swept by a bot. We rotated to a
+fresh mainnet-only key, recovered the gift pool, and relaunched the gift under the new safe owner.
