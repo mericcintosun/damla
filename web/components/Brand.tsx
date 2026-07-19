@@ -38,7 +38,13 @@ export function TopBar({ right }: { right?: React.ReactNode }) {
         <DropMark />
         <span>Damla</span>
       </Link>
-      {right ?? <span className="badge"><span className="dot" /> Monad Testnet</span>}
+      {right ?? (
+        <nav className="nav">
+          <Link href="/send">Send</Link>
+          <Link href="/how-it-works">How it works</Link>
+          <Link href="/links">My links</Link>
+        </nav>
+      )}
     </div>
   );
 }
