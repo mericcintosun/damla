@@ -11,7 +11,7 @@ export default function Home() {
 
       <section className="hero">
         <span className="eyebrow">
-          <span className="dot" /> Walletless · Gasless
+          <span className="dot" /> Walletless &amp; gasless claim · Monad
         </span>
         <h1>
           Send money by a link.
@@ -19,20 +19,27 @@ export default function Home() {
           <span className="grad">They just tap it.</span>
         </h1>
         <p className="lead">
-          Lock some MON behind a one-time link and share it anywhere. The person you send it
-          to opens the link and the money is <b>theirs</b> — no wallet to install, no gas to
-          buy, nothing to sign up for.
+          Lock some MON behind a one-time link and share it anywhere. Whoever opens it gets the
+          money — <b>no wallet to install, no gas to buy, nothing to sign up for.</b>
         </p>
 
-        <div className="hero-art">
-          <Image src="/art/il-abstract.webp" alt="" fill sizes="560px" priority />
+        <div className="hero-visual">
+          <Image
+            className="hero-mascot"
+            src="/art/mascot-wave-cut.webp"
+            alt="Damla mascot waving"
+            width={300}
+            height={330}
+            priority
+          />
         </div>
 
         <div className="steps">
           <div className="step">
             <div className="n">1</div>
             <div className="t">
-              <b>You lock the money.</b> <span>Pick an amount, get a link. One transaction.</span>
+              <b>You lock the money.</b>{" "}
+              <span>Pick an amount, get a link. One transaction from your wallet.</span>
             </div>
           </div>
           <div className="step">
@@ -45,7 +52,7 @@ export default function Home() {
           <div className="step">
             <div className="n">3</div>
             <div className="t">
-              <b>It is safe by design.</b>{" "}
+              <b>Safe by design.</b>{" "}
               <span>The relayer pays gas but can never redirect a single wei.</span>
             </div>
           </div>
@@ -54,13 +61,19 @@ export default function Home() {
         <Link href="/send" className="btn">
           Create a money link →
         </Link>
-        <p className="hint">
-          Unclaimed after the expiry window? The money returns to you. Nothing is ever stuck.
-        </p>
+        <div className="cta-row">
+          <Link href="/how-it-works" className="ghost-link">
+            How it works
+          </Link>
+          <span className="sep">·</span>
+          <Link href="/faq" className="ghost-link">
+            Why connect a wallet to send?
+          </Link>
+        </div>
       </section>
 
       <div className="foot">
-        <span>Native MON on Monad Testnet</span>
+        <span>Native MON · Monad Testnet</span>
         <a href={addrUrl(CONTRACT)} target="_blank" rel="noreferrer" className="mono">
           Contract ↗
         </a>

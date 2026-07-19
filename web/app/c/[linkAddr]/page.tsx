@@ -202,8 +202,14 @@ export default function ClaimPage() {
 
       {phase === "done" && drop && (
         <div className="card center">
-          <div className="celebrate">
-            <Image src="/art/il-celebrate.webp" alt="" width={560} height={420} />
+          <div className="hero-visual">
+            <Image
+              className="mascot"
+              src="/art/mascot-thumbsup-cut.webp"
+              alt="Damla mascot celebrating"
+              width={240}
+              height={260}
+            />
           </div>
           <h2 style={{ fontSize: 24, letterSpacing: "-0.02em" }}>It is yours 🎉</h2>
           <div className="big-amount mt-s">
