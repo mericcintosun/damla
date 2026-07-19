@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { formatEther, isAddress, getAddress, type Hex } from "viem";
 import { privateKeyToAccount, generatePrivateKey } from "viem/accounts";
@@ -201,10 +202,33 @@ export default function ClaimPage() {
             </button>
           </div>
 
-          <p className="hint">
-            The gas is paid for you. The money can only ever go to your address — not even the
-            relayer can redirect it.
-          </p>
+          <div className="proof">
+            <div className="proof-row">
+              <span className="proof-dot" />
+              <span>
+                <b>{formatEther(drop.amount)} MON</b> is held in escrow on Monad right now —{" "}
+                <a
+                  className="link-accent"
+                  href={`${EXPLORER}/address/${CONTRACT}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  verify on-chain ↗
+                </a>
+              </span>
+            </div>
+            <div className="proof-row">
+              <span className="proof-dot" />
+              <span>
+                The relayer pays gas but can <b>only</b> pay the address you sign for — it cannot
+                redirect a single wei.{" "}
+                <Link className="link-accent" href="/how-it-works">
+                  how ↗
+                </Link>
+              </span>
+            </div>
+          </div>
+          <p className="hint">Gas is on us. You need no wallet and no MON to receive.</p>
           {error && <div className="status err">{error}</div>}
         </div>
       )}

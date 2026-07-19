@@ -61,6 +61,11 @@ export default function Home() {
         <Link href="/send" className="btn">
           Create a money link →
         </Link>
+        <div className="mt-s">
+          <Link href="/drop" className="btn ghost">
+            Or drop to a group — first N people split it
+          </Link>
+        </div>
         <div className="cta-row">
           <Link href="/how-it-works" className="ghost-link">
             How it works

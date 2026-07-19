@@ -41,7 +41,7 @@ export function TopBar({ right }: { right?: React.ReactNode }) {
       {right ?? (
         <nav className="nav">
           <Link href="/send">Send</Link>
-          <Link href="/how-it-works">How it works</Link>
+          <Link href="/drop">Drop</Link>
           <Link href="/links">My links</Link>
         </nav>
       )}
