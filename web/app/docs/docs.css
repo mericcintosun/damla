@@ -1,0 +1,92 @@
+/* Scoped styles for the developer docs route. Imported only by app/docs pages. */
+
+.docs-pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink, #dbe7f0);
+  margin: 14px 0;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.docs-toc {
+  margin: 8px 0 4px;
+  padding: 14px 16px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.docs-toc-title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.docs-toc ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.docs-toc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.docs-toc a:hover {
+  text-decoration: underline;
+}
+
+/* Anchored sections sit below the top of the viewport so the heading is not clipped. */
+.docs-section {
+  scroll-margin-top: 24px;
+}
+
+.docs-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 14px 0;
+}
+
+.docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 520px;
+}
+
+.docs-table th,
+.docs-table td {
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.docs-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-soft);
+}
+
+.docs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.docs-table td .mono {
+  font-size: 12px;
+}

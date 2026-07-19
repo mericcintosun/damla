@@ -1,0 +1,66 @@
+/* Scoped styles for /report. Prefix: rp- */
+
+.rp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rp-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A textarea that reuses .input but breathes a bit more. */
+.rp-textarea {
+  min-height: 132px;
+  resize: vertical;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 13px 16px;
+}
+
+/* Native select reusing .input styling, with a little room for the caret. */
+.rp-select {
+  font-size: 15px;
+  padding: 13px 40px 13px 16px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2334e2c8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.rp-count {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.rp-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.rp-ok-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.rp-ok-actions .btn {
+  width: auto;
+  flex: 1;
+  min-width: 160px;
+}
+
+.rp-ok-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: var(--text);
+}

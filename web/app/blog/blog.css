@@ -1,0 +1,67 @@
+/* Blog-only styles. Every class is prefixed with "blog-" to avoid collisions
+   with global classes. Imported only inside the blog pages. */
+
+.blog-wide {
+  width: 100%;
+  max-width: 720px;
+}
+
+.blog-intro {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 6px 0 4px;
+}
+
+.blog-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.blog-item {
+  display: block;
+  padding: 18px 18px 16px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.blog-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.blog-date {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.blog-title {
+  color: var(--text);
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  margin: 6px 0 4px;
+}
+
+.blog-dek {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+.blog-read {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.blog-postmeta {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
