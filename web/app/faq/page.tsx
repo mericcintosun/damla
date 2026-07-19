@@ -59,7 +59,7 @@ export default function Faq() {
           <p className="q">Which network is this?</p>
           <p>
             Monad mainnet (chainId 143), with real MON. That is exactly why the amounts here are
-            kept tiny, it is real money moving on-chain, not a testnet toy.
+            kept tiny, it is real money moving on-chain, not a toy.
           </p>
 
           <div className="mt">

@@ -7,7 +7,7 @@ export const RPC_URL =
 export const EXPLORER =
   process.env.NEXT_PUBLIC_EXPLORER ?? "https://monadscan.com";
 
-export const monadTestnet = defineChain({
+export const monadChain = defineChain({
   id: CHAIN_ID,
   name: "Monad",
   nativeCurrency: { name: "Monad", symbol: "MON", decimals: 18 },

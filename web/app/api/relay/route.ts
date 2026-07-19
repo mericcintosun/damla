@@ -8,7 +8,7 @@ import {
   type Hex,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { monadTestnet, RPC_URL } from "@/lib/chain";
+import { monadChain, RPC_URL } from "@/lib/chain";
 import { CONTRACT, DAMLA_ABI, DROP_CONTRACT, DROP_ABI } from "@/lib/contract";
 
 export const runtime = "nodejs";
@@ -74,8 +74,8 @@ export async function POST(req: Request) {
     return Response.json({ error: "Unsupported action." }, { status: 400 });
   }
 
-  const pub = createPublicClient({ chain: monadTestnet, transport: http(RPC_URL) });
-  const wallet = createWalletClient({ account, chain: monadTestnet, transport: http(RPC_URL) });
+  const pub = createPublicClient({ chain: monadChain, transport: http(RPC_URL) });
+  const wallet = createWalletClient({ account, chain: monadChain, transport: http(RPC_URL) });
 
   try {
     // ---- Sponsored demo funding ------------------------------------------------------------

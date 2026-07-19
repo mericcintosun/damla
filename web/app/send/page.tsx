@@ -13,7 +13,7 @@ import {
 } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { TopBar, SiteFooter } from "@/components/Brand";
-import { monadTestnet, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
+import { monadChain, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
 import { CONTRACT, DAMLA_ABI } from "@/lib/contract";
 import { publicClient, shortAddr, buildFragment } from "@/lib/damla";
 import { saveSent } from "@/lib/history";
@@ -141,11 +141,11 @@ export default function SendPage() {
         const eth = getInjected();
         if (!eth) throw new Error("Wallet not available.");
         await ensureChain(eth);
-        wallet = createWalletClient({ account, chain: monadTestnet, transport: custom(eth) });
+        wallet = createWalletClient({ account, chain: monadChain, transport: custom(eth) });
       } else {
         usedDemo = true;
         const key = await ensureDemoWallet();
-        wallet = createWalletClient({ account: privateKeyToAccount(key), chain: monadTestnet, transport: http(RPC_URL) });
+        wallet = createWalletClient({ account: privateKeyToAccount(key), chain: monadChain, transport: http(RPC_URL) });
       }
 
       setBusyLabel(`Locking ${amount} MON…`);

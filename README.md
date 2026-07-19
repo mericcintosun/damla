@@ -12,9 +12,9 @@ Think of it as send-by-link, but open, onchain, and trustless: the relayer pays 
 **mathematically cannot touch or redirect your money**, on the fastest EVM chain.
 
 - **Live app:** https://getdamla.vercel.app
-- **LinkDrop contract (one-to-one):** [`0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`](https://testnet.monadexplorer.com/address/0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1)
-- **Drop contract (one-to-many):** [`0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d`](https://testnet.monadexplorer.com/address/0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d)
-- **Chain:** Monad Testnet (chainId `10143`)
+- **LinkDrop contract (one-to-one):** [`0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`](https://monadscan.com/address/0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1)
+- **Drop contract (one-to-many):** [`0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394`](https://monadscan.com/address/0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394)
+- **Chain:** Monad mainnet (chainId `143`)
 
 ## Features
 
@@ -63,7 +63,7 @@ safe: the contract enforces that the money reaches the signed recipient and no o
         ▼                                       ▼
  ┌─────────────────────┐  claim(linkAddr, payout, sig)  ┌──────────────┐
  │  DamlaLinkDrop.sol   │◄───────────────────────────────│   Relayer    │  (pays gas)
- │  (Monad Testnet)     │                                │  /api/relay  │
+ │  (Monad mainnet)     │                                │  /api/relay  │
  └─────────────────────┘   funds ──► signed payout        └──────────────┘
 ```
 
@@ -127,8 +127,8 @@ Deploy:
 
 ```bash
 cd contracts
-export MONAD_RPC_URL=https://testnet-rpc.monad.xyz
-export DEPLOYER_PRIVATE_KEY=0x...   # funded from https://faucet.monad.xyz
+export MONAD_RPC_URL=https://rpc.monad.xyz
+export DEPLOYER_PRIVATE_KEY=0x...   # funded from a funded account
 forge script script/Deploy.s.sol --rpc-url "$MONAD_RPC_URL" --broadcast
 ```
 
@@ -147,10 +147,10 @@ Environment variables (`web/.env.example`):
 |---|---|
 | `NEXT_PUBLIC_CONTRACT` | Deployed `DamlaLinkDrop` address |
 | `NEXT_PUBLIC_DROP_CONTRACT` | Deployed `DamlaDrop` address |
-| `NEXT_PUBLIC_CHAIN_ID` | `10143` (Monad Testnet) |
-| `NEXT_PUBLIC_RPC_URL` | `https://testnet-rpc.monad.xyz` |
-| `NEXT_PUBLIC_EXPLORER` | `https://testnet.monadexplorer.com` |
-| `RELAYER_PRIVATE_KEY` | **Server-only.** A funded testnet key used only to pay gas for `claim` / `reclaim`. |
+| `NEXT_PUBLIC_CHAIN_ID` | `143` (Monad mainnet) |
+| `NEXT_PUBLIC_RPC_URL` | `https://rpc.monad.xyz` |
+| `NEXT_PUBLIC_EXPLORER` | `https://monadscan.com` |
+| `RELAYER_PRIVATE_KEY` | **Server-only.** A funded mainnet key used only to pay gas for `claim` / `reclaim`. |
 
 The relayer route (`web/app/api/relay/route.ts`) is deliberately narrow: it only ever calls our
 contract's `claim` / `reclaim`, validates the address checksums and the 65-byte signature,

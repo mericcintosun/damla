@@ -2,18 +2,18 @@
 
 **Title:** Damla
 
-**Category:** testnet now (Monad Testnet, chainId 10143). Switch to mainnet once the mainnet
+**Category:** mainnet (Monad mainnet, chainId 143) +500 XP
 contracts are funded and deployed.
 
 **Project URL:** https://getdamla.vercel.app
 
 **GitHub:** https://github.com/mericcintosun/damla
 
-**Contract addresses (Monad Testnet):**
+**Contract addresses (Monad mainnet):**
 - DamlaLinkDrop (one to one): `0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1`
-- DamlaDrop (one to many): `0x7d105954B5A597375CFA4b6a5e08fB8e4bfb953d`
+- DamlaDrop (one to many): `0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394`
 
-Leave the contract address field empty until mainnet is deployed, then paste the mainnet address.
+Contract address for the form: 0x367F9BFc8E0A7270025914Eb5EF457A718bC5aE1 (DamlaLinkDrop).
 
 ---
 
@@ -71,6 +71,6 @@ guarantee to many claimers from one link.
 >
 > No wallet. No gas. No signup. You tap the link and it is yours.
 >
-> First 5 people to open this each get testnet MON, link below.
+> First 5 people to open this each get MON, link below.
 >
 > The relayer pays the gas but cannot touch your money. Here is how it works.

@@ -10,7 +10,7 @@ import {
   formatEther,
 } from "viem";
 import { TopBar } from "@/components/Brand";
-import { monadTestnet, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
+import { monadChain, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
 import { CONTRACT, DAMLA_ABI } from "@/lib/contract";
 import { publicClient, shortAddr } from "@/lib/damla";
 import { loadSent, type SentLink } from "@/lib/history";
@@ -70,7 +70,7 @@ export default function LinksPage() {
       }
       const wallet = createWalletClient({
         account: getAddress(accs[0]),
-        chain: monadTestnet,
+        chain: monadChain,
         transport: custom(eth),
       });
       const hash = await wallet.writeContract({

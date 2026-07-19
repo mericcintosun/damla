@@ -6,11 +6,11 @@ import {
   type Hex,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { monadTestnet, CHAIN_ID, RPC_URL } from "./chain";
+import { monadChain, CHAIN_ID, RPC_URL } from "./chain";
 import { CONTRACT } from "./contract";
 
 export const publicClient = createPublicClient({
-  chain: monadTestnet,
+  chain: monadChain,
   transport: http(RPC_URL),
 });
 
