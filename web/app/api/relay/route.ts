@@ -116,11 +116,12 @@ export async function POST(req: Request) {
     const hash = await wallet.writeContract(request);
     return Response.json({ hash });
   } catch (e) {
-    const msg =
-      (e as { shortMessage?: string })?.shortMessage ??
-      (e as { message?: string })?.message ??
-      "Relay failed.";
-    return Response.json({ error: cleanRevert(msg) }, { status: 400 });
+    const anyE = e as { shortMessage?: string; message?: string; metaMessages?: string[] };
+    // Combine every layer so a decoded custom-error name (e.g. AlreadyClaimed) is visible to cleanRevert.
+    const combined = [anyE?.shortMessage, anyE?.message, ...(anyE?.metaMessages ?? [])]
+      .filter(Boolean)
+      .join(" ");
+    return Response.json({ error: cleanRevert(combined || "Relay failed.") }, { status: 400 });
   }
 }
 

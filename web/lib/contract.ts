@@ -44,4 +44,12 @@ export const DAMLA_ABI = [
       { name: "claimed", type: "bool" },
     ],
   },
+  { type: "error", name: "AlreadyExists", inputs: [] },
+  { type: "error", name: "NothingHere", inputs: [] },
+  { type: "error", name: "AlreadyClaimed", inputs: [] },
+  { type: "error", name: "BadSignature", inputs: [] },
+  { type: "error", name: "NotExpired", inputs: [] },
+  { type: "error", name: "NotSender", inputs: [] },
+  { type: "error", name: "TransferFailed", inputs: [] },
+  { type: "error", name: "BadInput", inputs: [] },
 ] as const satisfies Abi;
