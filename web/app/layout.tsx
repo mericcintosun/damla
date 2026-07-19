@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AmbientBackground } from "@/components/Brand";
 
 const ICON =
   "data:image/svg+xml," +
@@ -36,11 +37,13 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     locale: "en_US",
+    images: [{ url: "/brand/og-cover.jpg", width: 1200, height: 630, alt: "Damla, send money by a link" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    images: ["/brand/og-cover.jpg"],
   },
   robots: { index: true, follow: true },
   icons: { icon: [{ url: ICON, type: "image/svg+xml" }] },
@@ -51,7 +54,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AmbientBackground />
+        {children}
+      </body>
     </html>
   );
 }

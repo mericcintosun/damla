@@ -80,6 +80,31 @@ export default function BrandKit() {
 
         <div className="divider" />
 
+        <h3 style={{ fontSize: 16, margin: "0 0 10px" }}>Assets</h3>
+        <p className="note" style={{ marginBottom: 12 }}>
+          The rendered set: the drop mark, the faucet that gives the drop, and the deep water grounds
+          used behind the interface.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 10 }}>
+          {[
+            { src: "/brand/drop-logo.webp", label: "Drop mark" },
+            { src: "/brand/drop-glow.webp", label: "Drop, glow" },
+            { src: "/brand/faucet.webp", label: "Faucet" },
+            { src: "/brand/bg-streaks.webp", label: "Ground, streaks" },
+            { src: "/brand/bg-deep.webp", label: "Ground, deep" },
+            { src: "/brand/og-cover.webp", label: "Social cover" },
+          ].map((a) => (
+            <figure key={a.src} style={{ margin: 0, border: "1px solid var(--border)", borderRadius: 12, overflow: "hidden", background: "#02040a" }}>
+              <div style={{ position: "relative", aspectRatio: "1 / 1" }}>
+                <Image src={a.src} alt={a.label} fill sizes="160px" style={{ objectFit: "cover" }} />
+              </div>
+              <figcaption style={{ fontSize: 11.5, color: "var(--muted)", padding: "7px 9px" }}>{a.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="divider" />
+
         <h3 style={{ fontSize: 16, margin: "0 0 10px" }}>Mascot</h3>
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <Image src="/art/mascot-wave-cut.webp" alt="Damla mascot" width={90} height={100} style={{ height: "auto" }} />

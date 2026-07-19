@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { TopBar } from "@/components/Brand";
 import { CONTRACT } from "@/lib/contract";
@@ -20,6 +21,18 @@ export default function HowItWorks() {
         </span>
         <div className="prose">
           <h2>How Damla works</h2>
+          <div
+            style={{
+              position: "relative",
+              aspectRatio: "16 / 10",
+              borderRadius: 16,
+              overflow: "hidden",
+              border: "1px solid var(--border)",
+              margin: "14px 0 18px",
+            }}
+          >
+            <Image src="/brand/faucet.webp" alt="A faucet releasing a single drop into a ripple" fill sizes="640px" style={{ objectFit: "cover" }} />
+          </div>
           <p>
             A Damla link carries a fresh, single-use key. The money is locked to that key&apos;s
             address on-chain, and the key itself travels only inside the link. Here is the whole
