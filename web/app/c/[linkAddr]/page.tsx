@@ -8,7 +8,7 @@ import { privateKeyToAccount, generatePrivateKey } from "viem/accounts";
 import { TopBar } from "@/components/Brand";
 import { EXPLORER, txUrl, addrUrl } from "@/lib/chain";
 import { CONTRACT, DAMLA_ABI } from "@/lib/contract";
-import { publicClient, signClaim, shortAddr } from "@/lib/damla";
+import { publicClient, signClaim, shortAddr, parseFragment } from "@/lib/damla";
 
 type Drop = {
   sender: `0x${string}`;
@@ -24,6 +24,7 @@ export default function ClaimPage() {
   const linkAddr = (params?.linkAddr ?? "") as string;
 
   const [secret, setSecret] = useState<Hex | null>(null);
+  const [note, setNote] = useState<string | null>(null);
   const [drop, setDrop] = useState<Drop | null>(null);
   const [phase, setPhase] = useState<Phase>("loading");
   const [error, setError] = useState<string | null>(null);
@@ -56,19 +57,20 @@ export default function ClaimPage() {
       setPhase("invalid");
       return;
     }
-    // The secret lives ONLY in the URL fragment and never leaves the browser.
-    const frag = window.location.hash.slice(1);
-    if (!frag || !/^0x[0-9a-fA-F]{64}$/.test(frag)) {
+    // The secret (and optional note) live ONLY in the URL fragment and never leave the browser.
+    const { secret: frag, note: fragNote } = parseFragment(window.location.hash);
+    if (!frag) {
       setPhase("invalid");
       return;
     }
     try {
-      const acc = privateKeyToAccount(frag as Hex);
+      const acc = privateKeyToAccount(frag);
       if (acc.address.toLowerCase() !== linkAddr.toLowerCase()) {
         setPhase("invalid");
         return;
       }
-      setSecret(frag as Hex);
+      setSecret(frag);
+      setNote(fragNote);
     } catch {
       setPhase("invalid");
       return;
@@ -174,6 +176,13 @@ export default function ClaimPage() {
           <p className="note">
             from <span className="mono">{shortAddr(drop.sender)}</span>
           </p>
+
+          {note && (
+            <div className="memo">
+              <div className="memo-k">Note</div>
+              <div className="memo-v">{note}</div>
+            </div>
+          )}
 
           <div className="mt">
             <button className="btn" onClick={() => claim(false)} disabled={phase === "claiming"}>

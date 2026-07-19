@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import QRCode from "qrcode";
 import {
   createWalletClient,
   custom,
@@ -15,7 +16,7 @@ import Link from "next/link";
 import { TopBar } from "@/components/Brand";
 import { monadTestnet, CHAIN_ID, RPC_URL, EXPLORER, txUrl } from "@/lib/chain";
 import { CONTRACT, DAMLA_ABI } from "@/lib/contract";
-import { publicClient, shortAddr } from "@/lib/damla";
+import { publicClient, shortAddr, buildFragment } from "@/lib/damla";
 import { saveSent } from "@/lib/history";
 
 type EthProvider = {
@@ -40,6 +41,7 @@ export default function SendPage() {
   const [demoKey, setDemoKey] = useState<Hex | null>(null);
   const [demoBalance, setDemoBalance] = useState<bigint | null>(null);
   const [amount, setAmount] = useState("");
+  const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const [busyLabel, setBusyLabel] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -186,7 +188,7 @@ export default function SendPage() {
       }
       await publicClient.waitForTransactionReceipt({ hash });
 
-      const url = `${window.location.origin}/c/${linkAddr}#${secret}`;
+      const url = `${window.location.origin}/c/${linkAddr}#${buildFragment(secret, note.trim() || undefined)}`;
       saveSent({
         linkAddr,
         amount,
@@ -226,6 +228,17 @@ export default function SendPage() {
 
   const activeAddr = mode === "demo" && demoKey ? privateKeyToAccount(demoKey).address : account;
 
+  const qrRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    if (link && qrRef.current) {
+      QRCode.toCanvas(qrRef.current, link, {
+        width: 168,
+        margin: 1,
+        color: { dark: "#04140f", light: "#e8f2f7" },
+      }).catch(() => {});
+    }
+  }, [link]);
+
   return (
     <div className="wrap">
       <TopBar />
@@ -241,6 +254,11 @@ export default function SendPage() {
             Share it with anyone. Whoever opens it claims the money — <b>no wallet, no gas</b>{" "}
             needed on their side.
           </p>
+
+          <div className="qr-wrap">
+            <canvas ref={qrRef} className="qr" />
+            <span className="qr-cap">Scan to open on a phone</span>
+          </div>
 
           <div className="linkbox">
             <input readOnly value={link} onFocus={(e) => e.target.select()} />
@@ -338,12 +356,25 @@ export default function SendPage() {
               <span className="unit">MON</span>
             </div>
             <div className="chips">
-              {(isDemo ? ["0.005", "0.01", "0.015"] : ["0.05", "0.1", "0.5", "1"]).map((a) => (
+              {(isDemo ? ["0.005", "0.01", "0.02"] : ["0.05", "0.1", "0.5", "1"]).map((a) => (
                 <button key={a} className="chip" onClick={() => setAmount(a)} disabled={busy}>
                   {a}
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className="mt">
+            <label className="label">Add a note (optional)</label>
+            <input
+              className="input"
+              style={{ fontSize: 15 }}
+              placeholder="Happy birthday! 🎂"
+              maxLength={140}
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              disabled={busy}
+            />
           </div>
 
           <div className="mt">
