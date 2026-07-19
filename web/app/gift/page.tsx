@@ -89,7 +89,7 @@ export default function GiftPage() {
       const data = await resp.json();
       if (!resp.ok) {
         if (/already/i.test(data?.error ?? "")) { setPhase("already"); return; }
-        if (/20 welcome gifts/i.test(data?.error ?? "")) { setPhase("sold"); await refresh(); return; }
+        if (/welcome gifts/i.test(data?.error ?? "")) { setPhase("sold"); await refresh(); return; }
         throw new Error(data?.error ?? "Could not send the gift.");
       }
       await publicClient.waitForTransactionReceipt({ hash: data.hash });

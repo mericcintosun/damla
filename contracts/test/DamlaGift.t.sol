@@ -12,7 +12,7 @@ contract DamlaGiftTest is Test {
     function setUp() public {
         vm.deal(owner, 100 ether);
         vm.prank(owner);
-        gift = new DamlaGift{value: 12 ether}();
+        gift = new DamlaGift{value: 12 ether}(20);
     }
 
     function testInitialState() public view {

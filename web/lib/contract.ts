@@ -8,7 +8,7 @@ export const DROP_CONTRACT = (process.env.NEXT_PUBLIC_DROP_CONTRACT ??
   "0xd9A80881Ac5D810043bEbF1754a7B0Ef61D7c394") as `0x${string}`;
 
 export const GIFT_CONTRACT = (process.env.NEXT_PUBLIC_GIFT_CONTRACT ??
-  "0xa5216024641aC5D923C067F1e56e80D6dcd0C6Eb") as `0x${string}`;
+  "0x704444AF25C17068800f9747D390E13980bB4Ede") as `0x${string}`;
 
 export const GIFT_ABI = [
   { type: "function", name: "claimGift", stateMutability: "nonpayable", inputs: [{ name: "to", type: "address" }], outputs: [] },

@@ -31,8 +31,13 @@ const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 8;
 const SPONSOR_WINDOW_MS = 10 * 60_000;
 const SPONSOR_MAX = 2;
+// The gift is valuable (0.6 MON each) and capped at 20 on-chain. Keep one IP from grabbing many
+// slots: at most one gift request per IP per hour. The contract still enforces one-per-address.
+const GIFT_WINDOW_MS = 60 * 60_000;
+const GIFT_MAX = 1;
 const hits = new Map<string, number[]>();
 const sponsorHits = new Map<string, number[]>();
+const giftHits = new Map<string, number[]>();
 
 function limited(map: Map<string, number[]>, key: string, windowMs: number, max: number): boolean {
   const now = Date.now();
@@ -102,6 +107,12 @@ export async function POST(req: Request) {
     if (action === "gift") {
       if (!body.to || !isAddress(body.to)) {
         return Response.json({ error: "Invalid address." }, { status: 400 });
+      }
+      if (limited(giftHits, ip, GIFT_WINDOW_MS, GIFT_MAX)) {
+        return Response.json(
+          { error: "This device already used a welcome gift. The gift is one per person." },
+          { status: 429 }
+        );
       }
       const to = getAddress(body.to);
       const { request } = await pub.simulateContract({
@@ -205,7 +216,7 @@ function cleanRevert(msg: string): string {
   if (/AlreadyClaimed/.test(msg)) return "This link has already been claimed.";
   if (/DropEmpty/.test(msg)) return "This drop is fully claimed, every share is gone.";
   if (/AlreadyGifted/.test(msg)) return "This wallet already claimed its welcome gift.";
-  if (/SoldOut/.test(msg)) return "All 20 welcome gifts have been claimed.";
+  if (/SoldOut/.test(msg)) return "All welcome gifts have been claimed.";
   if (/PoolEmpty/.test(msg)) return "The gift pool is empty right now.";
   if (/BadSignature/.test(msg)) return "Signature check failed for this payout.";
   if (/NothingHere/.test(msg)) return "There is no drop behind this link.";

@@ -9,7 +9,7 @@ pragma solidity ^0.8.24;
 contract DamlaGift {
     address public owner;
     uint256 public constant GIFT = 0.6 ether;
-    uint32 public constant MAX = 20;
+    uint32 public immutable MAX;
     uint32 public claimedCount;
     mapping(address => bool) public claimed;
 
@@ -23,8 +23,10 @@ contract DamlaGift {
     error TransferFailed();
     error BadInput();
 
-    constructor() payable {
+    constructor(uint32 maxGifts) payable {
+        if (maxGifts == 0) revert BadInput();
         owner = msg.sender;
+        MAX = maxGifts;
     }
 
     receive() external payable {}
