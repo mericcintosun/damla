@@ -23,9 +23,6 @@ export default function BrandKit() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Identity
-        </span>
         <h2 className="card-h">The Damla brand kit</h2>
         <p className="note">
           Damla means a drop of water. The Monad faucet hands you drops of MON, and Damla lets you

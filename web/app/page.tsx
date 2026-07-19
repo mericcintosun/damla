@@ -8,21 +8,7 @@ export default function Home() {
       <TopBar />
 
       <section className="hero">
-        <span className="eyebrow reveal">
-          <span className="dot" /> Walletless and gasless claim · Monad
-        </span>
-        <h1 className="reveal reveal-1">
-          Send money like
-          <br />
-          <span className="grad">a drop of water.</span>
-        </h1>
-        <p className="lead reveal reveal-2">
-          Damla means a drop. The Monad faucet gives you drops of MON, and Damla lets you pass one to
-          anyone with nothing but a link. They tap it and the money is <b>theirs</b>, with no wallet
-          to install, no gas to buy, and nothing to sign up for.
-        </p>
-
-        <div className="hero-visual reveal reveal-2">
+        <div className="hero-visual reveal">
           <Image
             className="hero-mascot"
             src="/art/mascot-wave-cut.webp"
@@ -33,22 +19,47 @@ export default function Home() {
           />
         </div>
 
-        <div className="steps">
-          <div className="step reveal reveal-1">
+        <h1 className="reveal reveal-1">
+          Send money like
+          <br />
+          <span className="grad">a drop of water.</span>
+        </h1>
+        <p className="lead reveal reveal-2">
+          Lock a little MON behind a one-time link and share it anywhere. Whoever opens it keeps the
+          money, with <b>no wallet to install, no gas to buy, and nothing to sign up for.</b>
+        </p>
+
+        <div className="hero-actions reveal reveal-3">
+          <Link href="/send" className="btn">
+            Send money by a link →
+          </Link>
+          <Link href="/drop" className="btn ghost">
+            Drop to a group
+          </Link>
+        </div>
+
+        <div className="pillrow reveal reveal-3">
+          <span className="pill-stat">No wallet</span>
+          <span className="pill-stat">No gas</span>
+          <span className="pill-stat">No signup</span>
+        </div>
+
+        <div className="steps reveal reveal-4">
+          <div className="step">
             <div className="n">1</div>
             <div className="t">
               <b>You lock the money.</b>{" "}
-              <span>Pick an amount, get a link. One transaction from your wallet.</span>
+              <span>Pick an amount, get a link. One transaction, or none at all with the instant wallet.</span>
             </div>
           </div>
-          <div className="step reveal reveal-2">
+          <div className="step">
             <div className="n">2</div>
             <div className="t">
               <b>They tap the link.</b>{" "}
               <span>A relayer covers the gas, so they need nothing to receive.</span>
             </div>
           </div>
-          <div className="step reveal reveal-3">
+          <div className="step">
             <div className="n">3</div>
             <div className="t">
               <b>Safe by design.</b>{" "}
@@ -57,14 +68,6 @@ export default function Home() {
           </div>
         </div>
 
-        <Link href="/send" className="btn reveal reveal-3">
-          Create a money link →
-        </Link>
-        <div className="mt-s reveal reveal-4">
-          <Link href="/drop" className="btn ghost">
-            Or drop to a group, first N people split it
-          </Link>
-        </div>
         <div className="cta-row reveal reveal-4">
           <Link href="/how-it-works" className="ghost-link">
             How it works

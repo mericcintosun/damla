@@ -13,9 +13,6 @@ export default function Faq() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Questions
-        </span>
         <div className="prose">
           <h2>Straight answers</h2>
 

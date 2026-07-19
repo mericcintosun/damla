@@ -107,9 +107,6 @@ export default function LinksPage() {
       />
 
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Your links
-        </span>
         <h2 className="card-h">Links you have sent from this device</h2>
         <p className="note mb-s">
           Status is read live from Monad. Expired and unclaimed? Reclaim the money back to your

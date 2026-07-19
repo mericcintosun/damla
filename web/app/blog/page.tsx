@@ -15,9 +15,6 @@ export default function BlogIndex() {
     <div className="wrap">
       <TopBar />
       <div className="card blog-wide">
-        <span className="eyebrow">
-          <span className="dot" /> Writing
-        </span>
         <p className="blog-intro">
           Short notes from building Damla. Why it exists, how the trustless part actually works, and
           where sending money by a link goes next. No filler.

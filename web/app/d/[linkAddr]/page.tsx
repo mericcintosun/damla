@@ -164,9 +164,6 @@ export default function DropClaimPage() {
 
       {(phase === "ready" || phase === "claiming") && pool && (
         <div className="card center">
-          <span className="eyebrow" style={{ justifyContent: "center", display: "flex" }}>
-            <span className="dot" /> Group drop · your share is waiting
-          </span>
           <div className="big-amount mt">
             {formatEther(pool.amountPerClaim)}
             <span className="u">MON</span>

@@ -167,9 +167,6 @@ export default function ClaimPage() {
 
       {(phase === "ready" || phase === "claiming") && drop && (
         <div className="card center">
-          <span className="eyebrow" style={{ justifyContent: "center", display: "flex" }}>
-            <span className="dot" /> Someone sent you money
-          </span>
           <div className="big-amount mt">
             {formatEther(drop.amount)}
             <span className="u">MON</span>

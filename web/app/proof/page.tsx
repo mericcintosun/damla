@@ -100,9 +100,6 @@ export default function ProofPage() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Live on Monad
-        </span>
         <h2 className="card-h">Proof, read straight from the chain</h2>
         <p className="note mb-s">
           Nothing here is stored or faked. These numbers are fetched live from Monad every few
@@ -134,10 +131,6 @@ export default function ProofPage() {
         </div>
 
         <div className="divider" />
-
-        <span className="eyebrow">
-          <span className="dot" /> Inspect any link
-        </span>
         <p className="note mb-s">
           Paste a Damla link (or just its address) and read its exact on-chain state.
         </p>

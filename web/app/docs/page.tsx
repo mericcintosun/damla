@@ -127,9 +127,6 @@ export default function Docs() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Developer docs
-        </span>
         <div className="prose">
           <h2>Build on Damla</h2>
           <p>

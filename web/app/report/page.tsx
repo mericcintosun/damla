@@ -111,9 +111,6 @@ export default function ReportPage() {
       <TopBar />
 
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Report a problem
-        </span>
 
         {!saved ? (
           <>

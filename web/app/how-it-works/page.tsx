@@ -16,9 +16,6 @@ export default function HowItWorks() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Under the hood
-        </span>
         <div className="prose">
           <h2>How Damla works</h2>
           <div

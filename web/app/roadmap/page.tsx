@@ -14,9 +14,6 @@ export default function Roadmap() {
     <div className="wrap">
       <TopBar />
       <div className="card">
-        <span className="eyebrow">
-          <span className="dot" /> Roadmap
-        </span>
         <div className="prose">
           <h2>Where Damla is headed</h2>
           <p>
