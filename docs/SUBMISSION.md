@@ -3,7 +3,6 @@
 **Title:** Damla
 
 **Category:** mainnet (Monad mainnet, chainId 143) +500 XP
-contracts are funded and deployed.
 
 **Project URL:** https://getdamla.vercel.app
 
