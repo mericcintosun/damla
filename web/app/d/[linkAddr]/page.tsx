@@ -137,7 +137,7 @@ export default function DropClaimPage() {
       {phase === "invalid" && (
         <div className="card center">
           <h2 style={{ fontSize: 22 }}>This drop link is not valid</h2>
-          <p className="note mt">Ask for the full link again — the part after the # matters.</p>
+          <p className="note mt">Ask for the full link again, the part after the # matters.</p>
         </div>
       )}
 
@@ -194,12 +194,12 @@ export default function DropClaimPage() {
                   <span className="spinner" /> Claiming your share…
                 </>
               ) : (
-                <>Claim my share — no wallet needed</>
+                <>Claim my share, no wallet needed</>
               )}
             </button>
           </div>
           <p className="hint">
-            Gas is on us, and your share can only be paid to your address — the relayer cannot take
+            Gas is on us, and your share can only be paid to your address, the relayer cannot take
             it.
           </p>
           {error && <div className="status err">{error}</div>}

@@ -142,7 +142,7 @@ export default function ClaimPage() {
           <h2 style={{ fontSize: 22 }}>This link is not valid</h2>
           <p className="note mt">
             The secret in the link is missing or does not match. Ask the sender to share the full
-            link again — the part after the <span className="mono">#</span> matters.
+            link again, the part after the <span className="mono">#</span> matters.
           </p>
         </div>
       )}
@@ -192,7 +192,7 @@ export default function ClaimPage() {
                   <span className="spinner" /> Claiming…
                 </>
               ) : (
-                <>Claim it — no wallet needed</>
+                <>Claim it, no wallet needed</>
               )}
             </button>
           </div>
@@ -206,7 +206,7 @@ export default function ClaimPage() {
             <div className="proof-row">
               <span className="proof-dot" />
               <span>
-                <b>{formatEther(drop.amount)} MON</b> is held in escrow on Monad right now —{" "}
+                <b>{formatEther(drop.amount)} MON</b> is held in escrow on Monad right now, {" "}
                 <a
                   className="link-accent"
                   href={`${EXPLORER}/address/${CONTRACT}`}
@@ -220,7 +220,7 @@ export default function ClaimPage() {
             <div className="proof-row">
               <span className="proof-dot" />
               <span>
-                The relayer pays gas but can <b>only</b> pay the address you sign for — it cannot
+                The relayer pays gas but can <b>only</b> pay the address you sign for, it cannot
                 redirect a single wei.{" "}
                 <Link className="link-accent" href="/how-it-works">
                   how ↗

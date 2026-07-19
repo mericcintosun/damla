@@ -20,7 +20,7 @@ export default function Home() {
         </h1>
         <p className="lead">
           Lock some MON behind a one-time link and share it anywhere. Whoever opens it gets the
-          money — <b>no wallet to install, no gas to buy, nothing to sign up for.</b>
+          money, <b>no wallet to install, no gas to buy, nothing to sign up for.</b>
         </p>
 
         <div className="hero-visual">
@@ -63,7 +63,7 @@ export default function Home() {
         </Link>
         <div className="mt-s">
           <Link href="/drop" className="btn ghost">
-            Or drop to a group — first N people split it
+            Or drop to a group, first N people split it
           </Link>
         </div>
         <div className="cta-row">

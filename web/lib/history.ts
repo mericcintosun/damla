@@ -1,5 +1,5 @@
 // Local, device-side record of links this browser created. It is a convenience index for the
-// "My links" page — the live truth (amount, claimed/expired) is always re-read from the chain.
+// "My links" page, the live truth (amount, claimed/expired) is always re-read from the chain.
 export type SentLink = {
   linkAddr: `0x${string}`;
   amount: string; // MON, human string

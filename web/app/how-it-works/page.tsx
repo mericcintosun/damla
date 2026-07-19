@@ -5,7 +5,7 @@ import { CONTRACT } from "@/lib/contract";
 import { addrUrl } from "@/lib/chain";
 
 export const metadata: Metadata = {
-  title: "How it works — Damla",
+  title: "How it works · Damla",
   description:
     "How Damla sends money by a link: an ephemeral key in the URL fragment, a relayer that pays gas, and a contract that can only pay the signed recipient.",
 };
@@ -33,7 +33,7 @@ export default function HowItWorks() {
                 <b>A one-time key is born in your browser.</b>{" "}
                 <span>
                   Its address becomes the link id; its secret goes into the part of the URL after the{" "}
-                  <span className="mono">#</span> — the fragment, which browsers never send to any
+                  <span className="mono">#</span>, the fragment, which browsers never send to any
                   server.
                 </span>
               </div>
@@ -74,7 +74,7 @@ export default function HowItWorks() {
                 <b>The contract pays only the signed address.</b>{" "}
                 <span>
                   It recovers the signer from the message and releases the money to the address that
-                  signature named — and no other.
+                  signature named, and no other.
                 </span>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function HowItWorks() {
             payout address is fixed inside a signature made by the link key, which the relayer never
             holds. Change the payout by one character and the signature no longer recovers to the
             link address, so the contract reverts. Even a fully compromised relayer key cannot
-            redirect a single wei — it can only waste its own gas.
+            redirect a single wei, it can only waste its own gas.
           </p>
 
           <h3>Why nothing gets stuck</h3>
@@ -98,7 +98,7 @@ export default function HowItWorks() {
 
           <div className="mt">
             <Link href="/send" className="btn">
-              Try it — create a link →
+              Try it, create a link →
             </Link>
           </div>
         </div>

@@ -198,7 +198,7 @@ export default function DropPage() {
   }
 
   const shareText = link
-    ? `First ${slots} people to tap this each get ${perShare} MON — no wallet, no gas needed. ${link}`
+    ? `First ${slots} people to tap this each get ${perShare} MON, no wallet, no gas needed. ${link}`
     : "";
   const whatsapp = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
@@ -218,7 +218,7 @@ export default function DropPage() {
             First {slots} people each get {perShare} MON.
           </h2>
           <p className="note">
-            Post this one link anywhere. Each person who opens it claims a share — no wallet, no gas.
+            Post this one link anywhere. Each person who opens it claims a share, no wallet, no gas.
             The link is the giveaway.
           </p>
 

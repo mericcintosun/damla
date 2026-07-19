@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { TopBar } from "@/components/Brand";
 
 export const metadata: Metadata = {
-  title: "FAQ — Damla",
+  title: "FAQ · Damla",
   description:
     "Common questions about Damla: who needs a wallet, what walletless and gasless mean, expiry and reclaim, and safety.",
 };

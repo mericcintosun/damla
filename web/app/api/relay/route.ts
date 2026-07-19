@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 // amount to a burner so a walletless user can try the send side. Nothing else spends it.
 const ALLOWED = new Set(["claim", "reclaim", "dropclaim", "sponsor"]);
 
-// Cap on gas the relayer will pay per relayed tx — far above a normal claim (~60k).
+// Cap on gas the relayer will pay per relayed tx, far above a normal claim (~60k).
 const GAS_CAP = 200_000n;
 
 // Sponsored demo: fixed, small. Enough to deposit a demo drop and pay Monad gas (~0.02 MON/tx).
@@ -50,7 +50,7 @@ function relayerAccount() {
 
 export async function POST(req: Request) {
   const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-forwarded-for")?.split(", ")[0]?.trim() ||
     req.headers.get("x-real-ip") ||
     "unknown";
   if (limited(hits, ip, WINDOW_MS, MAX_PER_WINDOW)) {
@@ -186,7 +186,7 @@ export async function POST(req: Request) {
 function cleanRevert(msg: string): string {
   if (/AlreadyClaimedThis/.test(msg)) return "You have already claimed from this drop.";
   if (/AlreadyClaimed/.test(msg)) return "This link has already been claimed.";
-  if (/DropEmpty/.test(msg)) return "This drop is fully claimed — every share is gone.";
+  if (/DropEmpty/.test(msg)) return "This drop is fully claimed, every share is gone.";
   if (/BadSignature/.test(msg)) return "Signature check failed for this payout.";
   if (/NothingHere/.test(msg)) return "There is no drop behind this link.";
   if (/NotSender/.test(msg)) return "Only the original sender can reclaim this link.";

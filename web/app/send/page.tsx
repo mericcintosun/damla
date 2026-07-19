@@ -76,7 +76,7 @@ export default function SendPage() {
     setError(null);
     const eth = getInjected();
     if (!eth) {
-      setError("No wallet found. Install a browser wallet like MetaMask, then reload — or use the demo below.");
+      setError("No wallet found. Install a browser wallet like MetaMask, then reload, or use the demo below.");
       return;
     }
     try {
@@ -251,7 +251,7 @@ export default function SendPage() {
           </span>
           <h2 className="card-h">{amount} MON is waiting behind this link.</h2>
           <p className="note">
-            Share it with anyone. Whoever opens it claims the money — <b>no wallet, no gas</b>{" "}
+            Share it with anyone. Whoever opens it claims the money, <b>no wallet, no gas</b>{" "}
             needed on their side.
           </p>
 
@@ -306,7 +306,7 @@ export default function SendPage() {
           <h2 className="card-h">Give money by a link.</h2>
           <p className="note mb-s">
             The money comes out of your funds, so the <b>sender</b> needs MON. The person you send
-            to needs <b>nothing</b> — no wallet, no gas.
+            to needs <b>nothing</b>, no wallet, no gas.
           </p>
 
           <div className="mt">
